@@ -11,11 +11,11 @@ import os
 import transformers
 import google.generativeai as genai
 
-json_file = open("/Users/andyliu/PycharmProjects/pythonProject/Projects/emotiondetector.json", "r")
+json_file = open("emotiondetector.json", "r")
 model_json = json_file.read()
 json_file.close()
 model = model_from_json(model_json)
-model.load_weights("/Users/andyliu/PycharmProjects/pythonProject/Projects/emotiondetector.h5")
+model.load_weights("emotiondetector.h5")
 haar_file = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
 face_cascade = cv2.CascadeClassifier(haar_file)
 
@@ -123,15 +123,15 @@ def main():
                 prev = prediction_label
                 mixer.stop()
                 if prev == "neutral...":
-                    mixer.music.load("/Users/andyliu/PycharmProjects/pythonProject/Projects/music.mp3")
+                    mixer.music.load("music.mp3")
                     mixer.music.set_volume(0.7)
                     mixer.music.play()
                 elif prev == "happy. Congrats on your nice day.":
-                    mixer.music.load("/Users/andyliu/PycharmProjects/pythonProject/Projects/happy.mp3")
+                    mixer.music.load("happy.mp3")
                     mixer.music.set_volume(0.7)
                     mixer.music.play()
                 elif prev == "sad. hope you feel better":
-                    mixer.music.load("/Users/andyliu/PycharmProjects/pythonProject/Projects/sad.mp3")
+                    mixer.music.load("sad.mp3")
                     mixer.music.set_volume(0.7)
                     mixer.music.play()
 
