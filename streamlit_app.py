@@ -2,7 +2,7 @@ import streamlit as st
 import cv2
 import numpy as np
 from huggingface_hub import metadata_save
-from keras.models import model_from_json
+from tensorflow.keras.models import model_from_json
 from pygame import mixer
 from streamlit_chat import message
 from dotenv import load_dotenv
