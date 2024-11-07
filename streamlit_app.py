@@ -98,7 +98,6 @@ def emofeedback(prev):
     message("To get other suggestions, chat with the following bot")
     # chat()
 
-mixer.init()
 def main():
     st.title("Facial Emotional Recognition")
     video_placeholder = st.empty()
@@ -121,24 +120,16 @@ def main():
             cv2.putText(frame, f'Emotion: {prediction_label}', (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             if prediction_label != prev:
                 prev = prediction_label
-                mixer.stop()
                 if prev == "neutral...":
-                    mixer.music.load("music.mp3")
-                    mixer.music.set_volume(0.7)
-                    mixer.music.play()
+                    st.audio("music.mp3", format="audio/mpeg", loop=True)
                 elif prev == "happy. Congrats on your nice day.":
-                    mixer.music.load("happy.mp3")
-                    mixer.music.set_volume(0.7)
-                    mixer.music.play()
+                    st.audio("happy.mp3", format="audio/mpeg", loop=True)
                 elif prev == "sad. hope you feel better":
-                    mixer.music.load("sad.mp3")
-                    mixer.music.set_volume(0.7)
-                    mixer.music.play()
+                    st.audio("sad.mp3", format="audio/mpeg", loop=True)
 
         video_placeholder.image(frame, channels="BGR")
         if mu:
-            if mixer.music.get_busy():
-                mixer.music.stop()
+            st.audio("blank.mp3", format="audio/mpeg", loop=True)
         if on:
             st.session_state.run = False
     message("It seems you are feeling")
@@ -147,7 +138,7 @@ def main():
     message("Can you give me some suggestions?", is_user=True)
     emofeedback(prev)
     if mu:
-        mixer.music.stop()
+        st.audio("blank.mp3", format="audio/mpeg", loop=True)
 
 if __name__ == "__main__":
     main()
