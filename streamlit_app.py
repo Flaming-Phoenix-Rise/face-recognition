@@ -102,7 +102,7 @@ def chat():
     st.title("Chatbot to help you")
     load_dotenv()
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-    genai.configure(api_key=GOOGLE_API_KEY)
+    genai.configure(api_key='AIzaSyAhIOrkXfbcD_LP0uhxoDIYbjy8MMTTarA')
     model = genai.GenerativeModel('gemini-pro')
 
     if 'chat_session' not in st.session_state:
