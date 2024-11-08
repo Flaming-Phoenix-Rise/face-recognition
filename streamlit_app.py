@@ -2,13 +2,13 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, WebRtcMode, VideoTransformerBase
 from tensorflow.keras.models import model_from_json
 from dotenv import load_dotenv
 import os
 import google.generativeai as genai
 from streamlit_chat import message
 from pygame import mixer
+from PIL import Image
 
 json_file = open("emotiondetector.json", "r")
 model_json = json_file.read()
@@ -44,12 +44,10 @@ def fun(user_role):
 def emofeedback(prev):
     if prev == 'happy. Congrats on your nice day.':
         message("Enjoy the Moment Fully")
-        message(
-            "Sometimes, we rush through happy moments without truly enjoying them. Take a pause and practice mindfulness—observe the sensations, thoughts, and feelings without trying to intensify or suppress them.")
+        message("Sometimes, we rush through happy moments without truly enjoying them. Take a pause and practice mindfulness—observe the sensations, thoughts, and feelings without trying to intensify or suppress them.")
     elif prev == 'neutral...':
         message("Embrace the Calm")
-        message(
-            "Neutral feelings can be a relief from more intense emotions. Try to view neutrality as a time of emotional rest, an opportunity to recharge.")
+        message("Neutral feelings can be a relief from more intense emotions. Try to view neutrality as a time of emotional rest, an opportunity to recharge.")
     elif prev == 'sad. hope you feel better':
         message("Here are some steps to deal with this emotion")
         message("1. Let yourself experience the sadness without rushing to push it away.")
@@ -68,53 +66,6 @@ def emofeedback(prev):
         message("1. Mindfulness can help reduce stress.")
     elif prev == 'surprise. I know, is that not wonderful?':
         message("Recognize your emotional response. It’s okay to feel surprised.")
-
-
-class VideoTransformer(VideoTransformerBase):
-    def __init__(self):
-        self.prev = None
-
-    def transform(self, frame):
-        img = frame.to_ndarray(format="bgr24")
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-        haar_file = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
-        face_cascade = cv2.CascadeClassifier(haar_file)
-
-        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-
-        for (p, q, r, s) in faces:
-            face = gray[q:q + s, p:p + r]
-            face_resized = cv2.resize(face, (48, 48))
-            img_features = extract_features(face_resized)
-
-            pred = model.predict(img_features)
-            prediction_label = labels[pred.argmax()]
-
-            cv2.rectangle(img, (p, q), (p + r, q + s), (255, 0, 0), 2)
-            cv2.putText(img, f'Emotion: {prediction_label}', (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-
-            if self.prev != prediction_label:
-                self.prev = prediction_label
-                emofeedback(prediction_label)
-                if prediction_label == "neutral...":
-                    st.audio("music.mp3", format="audio/mpeg", loop=True)
-                elif prediction_label == "happy. Congrats on your nice day.":
-                    st.audio("happy.mp3", format="audio/mpeg", loop=True)
-                elif prediction_label == "sad. hope you feel better":
-                    st.audio("sad.mp3", format="audio/mpeg", loop=True)
-                # elif prediction_label == "angry. I want to help you":
-                #     st.audio("angry.mp3", format="audio/mpeg", loop=True)
-                # elif prediction_label == "disgust. You can now handle it.":
-                #     st.audio("disgust.mp3", format="audio/mpeg", loop=True)
-                # elif prediction_label == "fear. Take a deep breath.":
-                #     st.audio("fear.mp3", format="audio/mpeg", loop=True)
-                # elif prediction_label == "stressed. pls have some rest.":
-                #     st.audio("stressed.mp3", format="audio/mpeg", loop=True)
-                # elif prediction_label == "surprise. I know, is that not wonderful?":
-                #     st.audio("surprise.mp3", format="audio/mpeg", loop=True)
-
-        return img
 
 
 def chat():
@@ -148,7 +99,25 @@ def main():
     if mu:
         st.audio("blank.mp3", format="audio/mpeg", loop=True)
 
-    webrtc_streamer(key="example", mode=WebRtcMode.SENDRECV, video_transformer_factory=VideoTransformer)
+    camera_input = st.camera_input("Capture Image")
+
+    if camera_input is not None:
+        image = Image.open(camera_input)
+        gray = np.array(image.convert("L"))
+        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+        face_resized = cv2.resize(gray, (48, 48))
+        img_features = extract_features(face_resized)
+        pred = model.predict(img_features)
+        prediction_label = labels[pred.argmax()]
+        st.image(face_resized)
+        st.write(f'Emotion: {prediction_label}')
+        if prediction_label == "neutral...":
+            st.audio("music.mp3",  format="audio/mpeg", loop=True)
+        elif prediction_label == "happy. Congrats on your nice day.":
+            st.audio("happy.mp3", format="audio/mpeg", loop=True)
+        elif prediction_label == "sad. hope you feel better":
+            st.audio("sad.mp3", format="audio/mpeg", loop=True)
+        emofeedback(prediction_label)
 
     if on:
         chat()
