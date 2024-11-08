@@ -11,4 +11,4 @@ google-generativeai
 tensorflow==2.18.0
 streamlit-camera-input-live
 streamlit-webrtc
-libgl1-mesa-glx
+# libgl1-mesa-glx
