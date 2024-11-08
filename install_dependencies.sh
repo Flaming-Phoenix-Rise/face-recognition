@@ -2,10 +2,10 @@
 
 # Example script to install dependencies on a Linux-based system
 echo "Updating package list..."
-apt-get update
+sudo apt-get update
 
 echo "Installing libgl1-mesa-glx and other dependencies..."
-apt-get install -y libgl1-mesa-glx \
+sudo apt-get install -y libgl1-mesa-glx \
                   build-essential \
                   curl \
                   git \
