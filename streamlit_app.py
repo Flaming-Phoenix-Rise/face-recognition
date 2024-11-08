@@ -22,7 +22,7 @@ labels = {
     3: 'happy. Congrats on your nice day.',
     4: 'neutral...',
     5: 'sad. hope you feel better',
-    6: 'stressed. pls have some rest.',
+    6: 'stressed. please have some rest.',
     7: 'surprise. I know, is that not wonderful?'
 }
 
@@ -58,7 +58,7 @@ def emofeedback(prev):
     elif prev == 'fear. Take a deep breath.':
         message("Here are some steps to deal with this emotion")
         message("1. Recognize the fear and name it.")
-    elif prev == 'stressed. pls have some rest.':
+    elif prev == 'stressed. please have some rest.':
         message("Here are some steps to deal with this emotion")
         message("1. Mindfulness can help reduce stress.")
     elif prev == 'surprise. I know, is that not wonderful?':
@@ -95,6 +95,8 @@ class VideoTransformer:
                     st.audio("happy.mp3", format="audio/mpeg", loop=True)
                 elif prediction_label == "sad. hope you feel better":
                     st.audio("sad.mp3", format="audio/mpeg", loop=True)
+                elif prediction_label == "stressed. please have some rest.":
+                    st.audio("stress.mp3", format="audio/mpeg", loop=True)
 
         return img
 
