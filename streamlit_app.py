@@ -90,13 +90,13 @@ class VideoTransformer:
                 self.prev = prediction_label
                 emofeedback(prediction_label)
                 if prediction_label == "neutral...":
-                    st.audio("music.mp3", format="audio/mpeg", loop=True)
+                    st.audio("music.mp3", format="audio/mpeg", loop=True, autoplay=True)
                 elif prediction_label == "happy. Congrats on your nice day.":
-                    st.audio("happy.mp3", format="audio/mpeg", loop=True)
+                    st.audio("happy.mp3", format="audio/mpeg", loop=True, autoplay=True)
                 elif prediction_label == "sad. hope you feel better":
-                    st.audio("sad.mp3", format="audio/mpeg", loop=True)
+                    st.audio("sad.mp3", format="audio/mpeg", loop=True, autoplay=True)
                 elif prediction_label == "stressed. please have some rest.":
-                    st.audio("stress.mp3", format="audio/mpeg", loop=True)
+                    st.audio("stress.mp3", format="audio/mpeg", loop=True, autoplay=True)
 
         return img
 
