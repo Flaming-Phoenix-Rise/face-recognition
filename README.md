@@ -6,14 +6,9 @@ A simple Streamlit app template for you to modify!
 
 ### How to run it on your own machine
 
-1. Install the requirements
+1. Run the app
 
    ```
-   $ pip install -r requirements.txt
-   ```
-
-2. Run the app
-
-   ```
-   $ streamlit run streamlit_app.py
+   https://theemotionrecognition.streamlit.app/
+   Turn on the camera
    ```
