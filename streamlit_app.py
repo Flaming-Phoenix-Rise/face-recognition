@@ -94,7 +94,8 @@ class VideoTransformer:
                 elif prediction_label == "sad. hope you feel better":
                     st.audio("sad.mp3", format="audio/mpeg", loop=True, autoplay=True)
                 elif prediction_label == "stressed. please have some rest.":
-                    st.audio("stress.mp3", format="audio/mpeg", loop=True, autoplay=True)
+                    st.write("Here is a piece of music to improve your mood. Shake It Off by Taylor Swift")
+                    st.audio("Shake It Off - Taylor Swift (Lyrics).mp3", start_time=30, format="audio/mpeg", loop=True, autoplay=True)
                 elif prediction_label == "neutral...":
                     st.audio("music.mp3", format="audio/mpeg", loop=True, autoplay=True)
                 else:
