@@ -90,10 +90,11 @@ class VideoTransformer:
                 self.prev = prediction_label
                 emofeedback(prediction_label)
                 if prediction_label == "happy. Congrats on your nice day.":
+                    st.write("Here is a piece of music to improve your mood. Happy by Pharrell Williams")
+                    st.audio("Pharrell Williams - Happy (Lyrics).mp3", format="audio/mpeg", start_time=31, loop=True, autoplay=True)
+                elif prediction_label == "sad. hope you feel better":
                     st.write("Here is a piece of music to improve your mood. Don't Worry Be Happy by Bobby McFerrin")
                     st.audio("Bobby McFerrin - Don't Worry Be Happy (Lyrics).mp3", format="audio/mpeg", loop=True, autoplay=True)
-                elif prediction_label == "sad. hope you feel better":
-                    st.audio("sad.mp3", format="audio/mpeg", loop=True, autoplay=True)
                 elif prediction_label == "stressed. please have some rest.":
                     st.write("Here is a piece of music to improve your mood. Shake It Off by Taylor Swift")
                     st.audio("Shake It Off - Taylor Swift (Lyrics).mp3", start_time=30, format="audio/mpeg", loop=True, autoplay=True)
