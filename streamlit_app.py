@@ -99,8 +99,14 @@ class VideoTransformer:
                     st.write("Here is a piece of music to improve your mood. Shake It Off by Taylor Swift")
                     st.audio("Shake It Off - Taylor Swift (Lyrics).mp3", start_time=30, format="audio/mpeg", loop=True, autoplay=True)
                 elif prediction_label == "neutral...":
+                    st.write("Here is a piece of music to improve your mood. Happy by Pharrell Williams")
+                    st.audio("Pharrell Williams - Happy (Lyrics).mp3", format="audio/mpeg", start_time=31, loop=True, autoplay=True)
                     st.audio("music.mp3", format="audio/mpeg", loop=True, autoplay=True)
+                elif prev == 'angry. I want to help you':
+                    st.write("Here is a piece of music to improve your mood. Don't blame me by Taylor Swift")
+                    st.audio("Taylor Swift - Don't Blame Me (Lyrics).mp3", format="audio/mpeg", loop=True, autoplay=True)
                 else:
+                    st.write("Here is a piece of relaxing music to improve your mood.")
                     st.audio("music.mp3", format="audio/mpeg", loop=True, autoplay=True)
 
         return img
